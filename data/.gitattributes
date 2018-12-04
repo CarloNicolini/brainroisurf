@@ -1,0 +1,5 @@
+matrices/Coactivation_matrix_bin.adj filter=lfs diff=lfs merge=lfs -text
+matrices/Coactivation_matrix_weighted.adj filter=lfs diff=lfs merge=lfs -text
+matrices/GroupAverage_rsfMRI_bin.adj filter=lfs diff=lfs merge=lfs -text
+matrices/GroupAverage_rsfMRI_unthr.adj filter=lfs diff=lfs merge=lfs -text
+matrices/GroupAverage_rsfMRI_weighted.adj filter=lfs diff=lfs merge=lfs -text
