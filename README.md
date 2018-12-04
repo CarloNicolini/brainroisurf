@@ -11,7 +11,7 @@ You can generate a picture like the one here, with just a few lines of code.
 You just need to clone this repository and run the `example_parcellation_fullview.py`.
 It requires the `bct` python package, which can be installed with `pip install bctpy`.
 
-**P.S** data files can only be fetched via the large file extensions of git, called `git lfs`. If you don't know how to install `git lfs`, follow this guide: 
+**P.S** data files can only be fetched via the large file extensions of git, called `git lfs`. If you don't know how to install `git lfs`, follow [this guide](https://github.com/git-lfs/git-lfs/wiki/Installation)
 
 	git lfs clone https://github.com/carlonicolini/brainroisurf
 	cd brainroisurf
