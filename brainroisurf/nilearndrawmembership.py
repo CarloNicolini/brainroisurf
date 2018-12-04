@@ -1,12 +1,11 @@
+import os
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from nilearn import datasets
-from surf_plotting import plot_surf_roi
 from nilearn import surface
 from nilearn.image import load_img, smooth_img
-import bct
-import networkqit as nq
+from .surf_plotting import plot_surf_roi
 
 def normalize_v3(arr):
     """ Normalize a numpy array of 3 component vectors shape=(n,3) """
@@ -284,14 +283,13 @@ def draw_parcellation_multiview(template_file, surface_left_file, surface_right_
     else:
         fig.savefig(output_file, dpi=kwargs.get('dpi',200), bbox_inches='tight', pad_inches=0)
 
-
-if __name__ == '__main__':
-    template = '/home/carlo/workspace/communityalg/data/template_638.nii'
-    surf_left = '/home/carlo/workspace/Brainet2017/Data/SurfTemplate/BrainMesh_ICBM152Left_smoothed.nv'
-    surf_right = '/home/carlo/workspace/Brainet2017/Data/SurfTemplate/BrainMesh_ICBM152Right_smoothed.nv'
-    A = np.loadtxt('/home/carlo/workspace/communityalg/data/Coactivation_matrix_weighted.adj')
-    memb,q = bct.community_louvain(A, gamma=1.5)
-    #memb = nq.reindex_membership(memb)
-    #memb = np.loadtxt('Memb1.txt')
-    #draw_parcellation_multiview(template, surf_left, surf_right, memb, 'prova_louvain.png')
-    draw_community_fsaverage()
+# if __name__ == '__main__':
+#     template = '/home/carlo/workspace/communityalg/data/template_638.nii'
+#     surf_left = '/home/carlo/workspace/Brainet2017/Data/SurfTemplate/BrainMesh_ICBM152Left_smoothed.nv'
+#     surf_right = '/home/carlo/workspace/Brainet2017/Data/SurfTemplate/BrainMesh_ICBM152Right_smoothed.nv'
+#     A = np.loadtxt('/home/carlo/workspace/communityalg/data/Coactivation_matrix_weighted.adj')
+#     memb,q = bct.community_louvain(A, gamma=1.5)
+#     #memb = nq.reindex_membership(memb)
+#     #memb = np.loadtxt('Memb1.txt')
+#     #draw_parcellation_multiview(template, surf_left, surf_right, memb, 'prova_louvain.png')
+#     draw_community_fsaverage()
