@@ -47,14 +47,20 @@ def load_nv(filename):
     Load files in the .nv format as the Surf data in the BrainetViewer
     First line is a comment and is skipped
     '''
+    if os.path.splitext(filename)[1]=='.gz':
+        import gzip
+        myopen = lambda x: gzip.open(x,'rt')
+    else:
+        myopen = lambda x: open(x)
+    
     import itertools
-    num_vertices = int(open(filename).readlines()[1])
-    num_faces = int(open(filename).readlines()[2+num_vertices])
+    num_vertices = int(myopen(filename).readlines()[1])
+    num_faces = int(myopen(filename).readlines()[2+num_vertices])
     XYZ, faces = None, None
-    with open(filename) as f_input:
+    with myopen(filename) as f_input:
         XYZ = np.loadtxt(itertools.islice(f_input, 0, num_vertices+2),
                          delimiter=' ', skiprows=2, dtype=np.float32)
-    with open(filename) as f_input:
+    with myopen(filename) as f_input:
         faces = np.loadtxt(itertools.islice(f_input, num_vertices+3,
                                             num_vertices+num_faces+3),
                             delimiter=' ', skiprows=0, dtype=np.int32)
@@ -178,7 +184,9 @@ def plot_parcellation(template, surf_mesh, membership, **kwargs):
     if isinstance(surf_mesh, str):
         import os
         filename, file_extension = os.path.splitext(surf_mesh)
-        if file_extension == '.nv':  # use the BrainetViewer format
+        # check if it is a '.nv.gz' or a '.nv' file, in case load it with the load_nv method
+        is_nv_file = file_extension=='.nv' or (file_extension=='.gz' and os.path.splitext(filename)[1]=='.nv')
+        if is_nv_file:
             surf_data = list(load_nv(surf_mesh))
         else:
             from nilearn.surface import load_surf_mesh
