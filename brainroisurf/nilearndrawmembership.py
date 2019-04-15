@@ -240,7 +240,7 @@ def plot_parcellation(template, surf_mesh, membership, **kwargs):
                         colorbar=kwargs.get('colorbar',True),
                         num_modules=num_modules,
                         output_file=kwargs.get('output_file',None),
-                        dpi=kwargs.get('dpi',72),
+                        dpi=kwargs.get('dpi',200),
                         axes=kwargs.get('axes',None))
     return fig, mesh_vert_memb
 
@@ -257,16 +257,20 @@ def draw_parcellation_multiview(template_file, surface_left_file, surface_right_
 
     # Create the multiple view figure
     fig, ax = plt.subplots(ncols=2, nrows=2, subplot_kw={'projection': '3d'})
-    fig.text(0.2, 0.75, 'L', fontsize=16)
-    fig.text(0.8, 0.75, 'R', fontsize=16)
+    fig.text(0.1, 0.85, 'L', fontsize=16)
+    fig.text(0.9, 0.85, 'R', fontsize=16)
     _, colors = \
     plot_parcellation(template, surface_left_file,  memb, view=(0,180), cmap=cmap,  axes=ax[0,0], colorbar=False)
     plot_parcellation(template, surface_right_file, memb, view=(0,0),   cmap=cmap,  axes=ax[0,1], colorbar=False)
     plot_parcellation(template, surface_left_file,  memb, view=(0,0),   cmap=cmap,  axes=ax[1,0], colorbar=False)
     plot_parcellation(template, surface_right_file, memb, view=(0,180), cmap=cmap,  axes=ax[1,1], colorbar=False)
-    
+
+    for i in range(2):
+        for j in range(2):
+            ax[i,j].dist = kwargs.get('zdist',6)
+
     # add an axis for the colorbar in the center
-    cax = fig.add_axes([0.45, 0.325, 0.05, 0.35])
+    cax = fig.add_axes([0.5, 0.325, 0.025, 0.25])
     # add the colorbar to the whole figure
     import matplotlib.cm as cm
     mappable = cm.ScalarMappable(cmap= cmap)
@@ -276,6 +280,9 @@ def draw_parcellation_multiview(template_file, surface_left_file, surface_right_
                         values = range(0, num_modules + 2))
     cbar.set_ticks( np.array(range(0, num_modules + 1)) + 0.5 )
     cbar.set_ticklabels( [' '] + list(range(1, num_modules + 1)) ) # altezza dei tick labels OK
+    
+    #for i in range(len(ax)):
+    #    ax[i].dist = kwargs.get('zdist',4)
 
     fig.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1, wspace=0.0, hspace=0.0)
     if output_file is None:
